@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base de données</title>
+</head>
+<body>
+
+    <h2>Contenu de la base de données - Utilisateurs</h2>
+
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Nom d'utilisateur</th>
+            <th>Mot de passe</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.password }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Contenu de la base de données - Messages</h2>
+
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Source</th>
+            <th>Destinataire</th>
+            <th>Message</th>
+            <th>Date</th>
+
+        </tr>
+        {% for message in messages %}
+        <tr>
+            <td>{{ message.id }}</td>
+            <td>{{ message.source }}</td>
+            <td>{{ message.destinataire }}</td>
+            <td>{{ message.message }}</td>
+            <td>{{ message.date }}</td>
+
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2, h3 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Bienvenue, {{ username }} !</h2>
+
+    <h3>Liste des utilisateurs :</h3>
+    <form method="post" action="/chatbox">
+        {% for user in users %}
+            <button type="submit" name="selected_user" value="{{ user.username }}">
+                {{ user.username }}
+            </button>
+            <br>
+            <br>
+        {% endfor %}
+    </form>
+
+</body>
+</html>
