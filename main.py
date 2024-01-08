@@ -3,6 +3,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime
 from flask_bcrypt import Bcrypt
+from OpenSSL import SSL
+
+
+
 
 
 
@@ -15,7 +19,13 @@ app.secret_key="main"
 bcrypt = Bcrypt(app)
 
 
-migrate = Migrate(app,db)
+#migrate = Migrate(app,db)
+
+
+#Pour faire le https....
+#context = SSL.Context(SSL.SSLv23_METHOD)
+#context.use_privatekey_file('private-key.pem')
+#context.use_certificate_file('certificate.pem')
 
  # Equivalent en JEE d'un bean User
 
@@ -37,8 +47,11 @@ class Messages(db.Model):
 
 
 
- #@app.route("/", methods=['GET', 'POST']) # Equivalent en JEE de @WebServlet
- #def accueil():
+@app.route("/")
+def accueil():
+    return render_template("home.html")
+
+
     
 
 
@@ -54,7 +67,7 @@ def connection():
         # Vérifier si l'utilisateur existe et le couple username/password est valide
         user = User.query.filter_by(username=username).first()
 
-        if user and bcrypt.check_password_hash(user.password, password):
+        if user and bcrypt.check_password_hash(user.password, password):# on crypte le mdp pour voir s'il est bien ds la bdd où les mdp sont hash" voir inscription()
             flash(f"Connexion réussie en tant que {username}")
             session['username'] = username
             
@@ -198,4 +211,5 @@ with app.app_context():
     db.create_all()
 
 if __name__ == "__main__":
-      app.run(debug=True)
+      app.run(debug=True,ssl_context=('public-certificate.pem','private-key.pem'))#Si j'écris que ssl_context le certificat est dummy. Le serveur sera en https mais une erreur de risque va s'afficher sur la page;
+                                            # Il faut donc créer un self-signed certificate qui est un certificat qu'on va créer nous même au lieu de payer et pour ça on utilise openssl.
